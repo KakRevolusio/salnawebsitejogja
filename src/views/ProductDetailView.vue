@@ -2,39 +2,51 @@
   <div>
     <div class="container my-5 pt-5"> <!-- Tambahkan pt-5 untuk memberikan jarak dengan navbar -->
       <div class="row">
-        <div class="col-md-6" data-aos="fade-up">
-          <img :src="product.image" class="img-fluid product-image rounded shadow" alt="Product Image"> <!-- Tambahkan kelas product-image -->
-        </div>
-        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-          <h1 class="display-4">{{ product.name }}</h1>
-          <p class="lead">{{ product.description }}</p>
-          <p class="h4 text-muted">{{ product.price }}</p>
-          <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#purchaseModal">
-            Beli Sekarang
-          </button>
-        </div>
+  <div class="col-md-6" data-aos="fade-up">
+    <div class="">
+      <img :src="product.image" class="card-img-top img-fluid rounded shadow" alt="Product Image" style=" object-fit: cover;">
+    </div>
+  </div>
+  <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+    <div class="card h-100">
+      <div class="card-body">
+        <h1 class="card-title display-6">{{ product.name }}</h1> <!-- Mengubah display-4 menjadi display-6 agar lebih kecil -->
+        <p class="card-text lead">{{ product.description }}</p>
+        <p class="card-text h5 text-muted">{{ product.price }}</p> <!-- Mengubah h4 menjadi h5 agar lebih kecil -->
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#purchaseModal">
+          Beli Sekarang
+        </button>
       </div>
+    </div>
+  </div>
+</div>
 
       <!-- Related Products Section -->
-      <div class="row mt-5">
-        <div class="col-12">
-          <h2 class="mb-4">Produk Lainnya</h2>
+      <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Koleksi Parfum Kami</h2>
         </div>
-        <div class="row justify-content-center">
-          <div v-for="relatedProduct in relatedProducts" :key="relatedProduct.id" class="col-md-4 mb-4">
-            <router-link :to="'/product/' + relatedProduct.id" class="text-decoration-none">
-              <div class="card h-100" data-aos="fade-up">
-                <img :src="relatedProduct.image" class="card-img-top" :alt="relatedProduct.name">
-                <div class="card-body">
-                  <h5 class="card-title">{{ relatedProduct.name }}</h5>
-                  <p class="card-text">{{ relatedProduct.description }}</p>
-                  <p class="card-text"><strong>{{ relatedProduct.price }}</strong></p>
+        <section id="products" class="py-5">
+      <div class="container">
+        <div class="row g-4 justify-content-center">
+          <div v-for="product in products" :key="product.id" class="col-12 col-md-6 col-lg-3" data-aos="fade-up">
+            <router-link :to="`/product/${product.id}`" class="text-decoration-none">
+              <div class="card h-100 product-card">
+                <div class="card-img-wrapper">
+                  <img :src="product.image" class="card-img-top" :alt="product.name">
                 </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text">{{ product.description }}</p>
+                </div>
+                
               </div>
             </router-link>
           </div>
         </div>
       </div>
+    </section>
+      </div><div class="row mt-5">
+     
     </div>
 
     <!-- Modal -->
@@ -135,45 +147,140 @@ export default {
   }
 };
 </script>
-<style>
-@import 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css';
-@import 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css';
+<style scoped>
 
-/* Custom styles */
-.display-4 {
-  font-weight: bold;
+/* Hero Section */
+.hero-section {
+  background: url('@/assets/mokup6.webp') no-repeat center center/cover;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
 }
-.lead {
-  font-size: 1.25rem;
-  font-weight: 300;
-}
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-}
-.rounded {
-  border-radius: 0.5rem !important;
-}
-.shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-}
-.card {
-  transition: transform 0.2s, box-shadow 0.2s;
+
+/* Card Produk */
+.product-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
-}
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
+
+.product-card:hover {
+  transform: translateY(-10px);
 }
 
-/* Tambahkan kelas baru untuk gambar produk */
-.product-image {
-  max-width: 70%; /* Mengurangi ukuran gambar */
-  margin: 0 auto; /* Pusatkan gambar */
-  display: block;
+.card-img-wrapper {
+  position: relative;
+  padding-top: 100%;
+  overflow: hidden;
+}
+
+.card-img-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+  transform: scale(1.1);
+}
+
+.card-body {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+}
+
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.card-footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e9ecef;
+  padding: 1rem;
+}
+
+/* Tombol Beli */
+.btn-light {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #343a40;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.btn-light:hover {
+  background-color: #343a40;
+  color: #ffffff;
+  border-color: #343a40;
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 15px;
+  border: none;
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+  padding: 1.5rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.btn-lg {
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Custom button colors */
+.btn-success {
+  background-color: #25D366;
+  border-color: #25D366;
+}
+
+.btn-warning {
+  background-color: #EE4D2D;
+  border-color: #EE4D2D;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #E4405F;
+  border-color: #E4405F;
+}
+
+.btn-success:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 </style>
